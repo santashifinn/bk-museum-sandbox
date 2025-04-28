@@ -1,0 +1,9 @@
+[
+  {
+    "username": "string",
+    "email": "string",
+    "password_hashed": "string",
+    "faves": "array",
+    "created": "date"
+  }
+]
