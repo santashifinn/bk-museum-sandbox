@@ -18,7 +18,7 @@ usersRouter.get("/:username", getUserByUsername);
 
 usersRouter.post("/", createUser);
 
-usersRouter.get("/:username/:work_id", getFavesByUser);
+usersRouter.get("/:username/faves", getFavesByUser);
 
 usersRouter.post("/:username/:work_id", postFave);
 
