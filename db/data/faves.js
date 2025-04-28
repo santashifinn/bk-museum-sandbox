@@ -1,6 +1,6 @@
 module.exports = [
   {
-    username: "string",
+    username: "bob",
     work_id: "string",
   },
 ];

@@ -16,7 +16,7 @@ app.use(express.json());
 app.use("/api", apiRouter);
 app.use("/api/users", usersRouter);
 
-app.all("*", generalErrorHandler);
+app.all("/{*any}", generalErrorHandler);
 
 app.use(postgresErrorHandler);
 

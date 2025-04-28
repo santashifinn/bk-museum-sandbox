@@ -1,6 +1,6 @@
 module.exports = [
   {
-    username: "string",
+    username: "bob",
     email: "string",
     password_hashed: "string",
     created: "date",
