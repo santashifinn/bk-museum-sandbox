@@ -1,16 +1,16 @@
 const {
-  userData,
-} = require("../db/data/");
+  userData, favesData
+} = require("../db/data/test-data/");
 const db = require("../db/connection");
 const seed = require("../db/seeds/seed");
 const request = require("supertest");
-const jestsorted = require("jest-sorted");
+// const jestsorted = require("jest-sorted");
 
 const app = require("../app");
 
 const endpointsJson = require("../endpoints.json");
 
-beforeEach(() => seed({ articleData, commentData, topicData, userData }));
+beforeEach(() => seed({ userData, favesData }));
 afterAll(() => db.end());
 
 describe("GET /api", () => {
