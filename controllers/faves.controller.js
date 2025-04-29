@@ -6,6 +6,7 @@ const {
 } = require("../models/faves.model");
 
 exports.getFavesByUser = (req, res, next) => {
+  console.log(req)
   const username = req.params.username;
   const limit = req.query.limit;
   const p = req.query.p;

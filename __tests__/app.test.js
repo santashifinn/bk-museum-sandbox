@@ -24,6 +24,46 @@ describe("GET /api", () => {
   });
 });
 
+describe("GET /api/users/:username", () => {
+  test("200: Responds with the requested user object", () => {
+    return request(app)
+      .get("/api/users/bob")
+      .expect(200)
+      .then(({ body: { user } }) => {
+        expect(user.username).toBe("bob");
+        expect(user.email).toBe("bob@bob.com");
+        expect(user.password_hashed).toBe("svesgsevaesrdwefs235r2twfcd");
+      });
+  });
+  test("404: Responds with an error message when given a non-existent username", () => {
+    return request(app)
+      .get("/api/users/billandbentheflowerpotmen")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Not found");
+      });
+  });
+});
+
+  test.skip("200: Responds with an array of favourite works for the given username", () => {
+    return request(app)
+      .get("/api/bob/faves")
+      .expect(200)
+      
+      .then((data) => {
+        console.log(data);
+        // expect(faves.length).toBe(1);
+        // comments.forEach((comment) => {
+        //   expect(typeof comment.comment_id).toBe("number");
+        //   expect(typeof comment.votes).toBe("number");
+        //   expect(typeof comment.created_at).toBe("string");
+        //   expect(typeof comment.author).toBe("string");
+        //   expect(typeof comment.body).toBe("string");
+        //   expect(comment.article_id).toBe(3);
+        // });
+      });
+  });
+
 describe("General error tests", () => {
   test("404: Responds with error message when given an invalid endpoint", () => {
     return request(app)
