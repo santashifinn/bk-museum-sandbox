@@ -3,7 +3,8 @@ const db = require("../db/connection");
 exports.selectFavesByUser = (username, limit = 10, p) => {
   let sqlQuery = `SELECT * FROM faves
       WHERE faves.username = ${username}
-      ORDER BY created_at DESC `;
+      ORDER BY created_at DESC 
+      `;
   if (limit) {
     sqlQuery += `LIMIT ${limit} `;
   }

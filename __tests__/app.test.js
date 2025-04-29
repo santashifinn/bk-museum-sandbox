@@ -25,7 +25,7 @@ describe("GET /api", () => {
 });
 
 describe("GET /api/users/:username", () => {
-  test("200: Responds with the requested user object", () => {
+  test("200: Responds with the requested user", () => {
     return request(app)
       .get("/api/users/bob")
       .expect(200)
@@ -45,13 +45,46 @@ describe("GET /api/users/:username", () => {
   });
 });
 
-  test.skip("200: Responds with an array of favourite works for the given username", () => {
+describe("POST /api/articles", () => {
+  test("201: Adds a new article", () => {
+    const newUser = {
+    username: "al",
+    email: "al@al.com",
+    password_hashed: "cjwikfiawebafkwbjfwks",
+  }
     return request(app)
-      .get("/api/bob/faves")
-      .expect(200)
-      
+      .post("/api/users")
+      .send(newUser)
+      .expect(201)
+      .then(({ body: { user } }) => {
+        expect(user.username).toBe("al");
+        expect(user.email).toBe("al@al.com");
+        expect(user.password_hashed).toBe("cjwikfiawebafkwbjfwks");
+      });
+  });
+  test("400: Responds with an error message when given incomplete required data, ex. missing email", () => {
+    const newUser = {
+      username: "al",
+      password_hashed: "cjwikfiawebafkwbjfwks",
+    };
+    return request(app)
+      .post("/api/users")
+      .send(newUser)
+      .expect(400)
+      .then((response) => {
+        expect(response.body.msg).toBe("Bad request");
+      });
+  });
+});
+
+describe.skip("GET /api/users/:username/faves", () => {
+  test("200: Responds with an array of favourite works for the given username", () => {
+    return request(app)
+      .get("/api/users/bob/faves")
+      // .expect(200)
+
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         // expect(faves.length).toBe(1);
         // comments.forEach((comment) => {
         //   expect(typeof comment.comment_id).toBe("number");
@@ -63,6 +96,7 @@ describe("GET /api/users/:username", () => {
         // });
       });
   });
+});
 
 describe("General error tests", () => {
   test("404: Responds with error message when given an invalid endpoint", () => {

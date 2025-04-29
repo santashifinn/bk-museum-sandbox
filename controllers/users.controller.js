@@ -22,9 +22,9 @@ exports.getUserByUsername = (req, res, next) => {
 };
 
 exports.createUser = (req, res, next) => {
-  const username = req.params.username;
-  const email = req.params.email;
-  const password_hashed = req.params.password_hashed;
+  const username = req.body.username;
+  const email = req.body.email;
+  const password_hashed = req.body.password_hashed;
 
   addUser(username, email, password_hashed)
     .then((user) => {

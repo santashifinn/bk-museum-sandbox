@@ -21,10 +21,14 @@ exports.selectUserByUsername = (username) => {
 };
 
 exports.addUser = (username, email, password_hashed) => {
-  return db.query(
-    `INSERT INTO users (username, email, password_hashed) VALUES ($1, $2, $3) RETURNING *;`,
-    [username, email, password_hashed]
-  );
+  return db
+    .query(
+      `INSERT INTO users (username, email, password_hashed) VALUES ($1, $2, $3) RETURNING *;`,
+      [username, email, password_hashed]
+    )
+    .then(({ rows: [user] }) => {
+      return user;
+    });
 };
 
 exports.checkUserExists = (username) => {
