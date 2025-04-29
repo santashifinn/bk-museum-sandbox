@@ -45,8 +45,8 @@ describe("GET /api/users/:username", () => {
   });
 });
 
-describe("POST /api/articles", () => {
-  test("201: Adds a new article", () => {
+describe("POST /api/users", () => {
+  test("201: Adds a new user", () => {
     const newUser = {
     username: "al",
     email: "al@al.com",
