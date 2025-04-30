@@ -6,16 +6,26 @@ const {
 } = require("../models/faves.model");
 
 exports.getFavesByUser = (req, res, next) => {
-  // const username = req.params.username;
+  const username = req.params.username;
   // const limit = req.query.limit;
   // const p = req.query.p;
   // const promises = [selectFavesByUser(username, limit, p)];
   // Promise.all(promises)
-  //   .then(([work_id]) => {
-  //     return res.status(200).send({ work_id });
-  //   })
-    // .catch(next);
+  selectFavesByUser(username)
+    .then((faves) => {
+      return res.status(200).send({ faves });
+    })
+    .catch(next);
 };
+
+// exports.getUserByUsername = (req, res, next) => {
+//   const username = req.params.username;
+//   selectUserByUsername(username)
+//     .then((user) => {
+//       return res.status(200).send({ user });
+//     })
+//     .catch(next);
+// };
 
 exports.postFave = (req, res, next) => {
   const username = req.params.username;

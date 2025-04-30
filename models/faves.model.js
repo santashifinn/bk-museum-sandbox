@@ -1,19 +1,15 @@
 const db = require("../db/connection");
 
-exports.selectFavesByUser = (username, limit = 10, p) => {
-  let sqlQuery = `SELECT * FROM faves
-      WHERE faves.username = ${username}
-      ORDER BY created_at DESC 
-      `;
-  if (limit) {
-    sqlQuery += `LIMIT ${limit} `;
-  }
-  if (p) {
-    sqlQuery += `OFFSET (${p}-1) * ${limit} `;
-  }
-  return db.query(sqlQuery).then(({ rows }) => {
-    return rows;
-  });
+exports.selectFavesByUser = (username) => {
+  return db
+    .query(
+      `SELECT * FROM faves
+      WHERE username = $1;`,
+      [username]
+    )
+    .then(({ rows }) => {
+      return rows[0];
+    });
 };
 
 exports.addFave = (username, work_id) => {

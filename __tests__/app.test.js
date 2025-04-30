@@ -1,6 +1,4 @@
-const {
-  userData, favesData
-} = require("../db/data/test-data/");
+const { userData, favesData } = require("../db/data/test-data/");
 const db = require("../db/connection");
 const seed = require("../db/seeds/seed");
 const request = require("supertest");
@@ -48,10 +46,10 @@ describe("GET /api/users/:username", () => {
 describe("POST /api/users", () => {
   test("201: Adds a new user", () => {
     const newUser = {
-    username: "al",
-    email: "al@al.com",
-    password_hashed: "cjwikfiawebafkwbjfwks",
-  }
+      username: "al",
+      email: "al@al.com",
+      password_hashed: "cjwikfiawebafkwbjfwks",
+    };
     return request(app)
       .post("/api/users")
       .send(newUser)
@@ -77,14 +75,14 @@ describe("POST /api/users", () => {
   });
 });
 
-describe.skip("GET /api/users/:username/faves", () => {
+describe("GET /api/users/:username/faves", () => {
   test("200: Responds with an array of favourite works for the given username", () => {
     return request(app)
       .get("/api/users/bob/faves")
-      // .expect(200)
+      .expect(200)
 
-      .then((data) => {
-        // console.log(data);
+      .then(({ body: { faves } }) => {
+        console.log(faves.work_id);
         // expect(faves.length).toBe(1);
         // comments.forEach((comment) => {
         //   expect(typeof comment.comment_id).toBe("number");
