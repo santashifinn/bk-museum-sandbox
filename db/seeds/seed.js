@@ -22,7 +22,8 @@ const seed = ({ userData, favesData }) => {
   .then(() => {
     return db.query(`
     CREATE TABLE faves (
-      username VARCHAR PRIMARY KEY REFERENCES users(username) NOT NULL,
+    fave_id SERIAL PRIMARY KEY,
+      username VARCHAR REFERENCES users(username) NOT NULL,
       work_id VARCHAR,
       created_at TIMESTAMP DEFAULT NOW()
     );`);

@@ -8,7 +8,7 @@ exports.selectFavesByUser = (username) => {
       [username]
     )
     .then(({ rows }) => {
-      return rows[0];
+      return rows;
     });
 };
 

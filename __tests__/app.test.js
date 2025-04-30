@@ -82,8 +82,8 @@ describe("GET /api/users/:username/faves", () => {
       .expect(200)
 
       .then(({ body: { faves } }) => {
-        console.log(faves.work_id);
-        // expect(faves.length).toBe(1);
+        console.log(faves);
+        expect(faves.length).toBe(2);
         // comments.forEach((comment) => {
         //   expect(typeof comment.comment_id).toBe("number");
         //   expect(typeof comment.votes).toBe("number");
