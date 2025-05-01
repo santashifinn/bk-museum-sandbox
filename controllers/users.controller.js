@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
 
 const {
   selectUsers,
@@ -55,10 +54,10 @@ exports.confirmUser = (req, res, next) => {
     .then((user) => {
       if (user) {
         bcrypt.compare(req.body.password, user.hash_password, (err, result) => {
-          if (err) {
-            res.status(500).send({ message: "Error comparing passwords" });
-            return;
-          }
+          // if (err) {
+          //   res.status(500).send({ message: "Error comparing passwords" });
+          //   return;
+          // }
           if (result) {
             res
               .status(200)
