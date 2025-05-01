@@ -42,25 +42,59 @@ exports.createUser = (req, res, next) => {
   });
 };
 
+// exports.confirmUser = (req, res, next) => {
+//   if (!req.body.username || !req.body.password) {
+//     res
+//       .status(400)
+//       .send({ message: "Please enter your username and password." });
+//   }
+//   selectUserByUsername(req.body.username).then((user) => {
+//     if (user) {
+//       bcrypt.compare(req.body.password, user.hash_password, (err, result) => {
+//         if (err) {
+//           res.status(500).send({ message: "Error comparing passwords" });
+//           return;
+//         }
+//         if (result) {
+//           res
+//             .status(200)
+//             .send({ message: "Login successful.", user: { _id, username } });
+//         }
+//       });
+//     }
+//   });
+// };
+
 exports.confirmUser = (req, res, next) => {
   if (!req.body.username || !req.body.password) {
     res
       .status(400)
       .send({ message: "Please enter your username and password." });
   }
-  selectUserByUsername(req.body.username).then((user) => {
-    if (user) {
-      bcrypt.compare(req.body.password, user.hash_password, (err, result) => {
-        if (err) {
-          res.status(500).send({ message: "Error comparing passwords" });
-          return;
-        }
-        if (result) {
-          res
-            .status(200)
-            .send({ message: "Login successful.", user: { _id, username } });
-        }
+
+  selectUserByUsername(req.body.username)
+    .then((user) => {
+      if (user) {
+        bcrypt.compare(req.body.password, user.hash_password, (err, result) => {
+          if (err) {
+            res.status(500).send({ message: "Error comparing passwords" });
+            return;
+          }
+          if (result) {
+            res
+              .status(200)
+              .send({ message: "Login successful.", user: { _id, username } });
+          } else {
+            res.status(401).send({ message: "Passwords don't match." });
+          }
+        });
+      } else {
+        res.status(400).send({ message: "User not found. Please sign up." });
+      }
+    })
+    .catch((error) => {
+      res.status(400).send({
+        message: "There was an error while authenticating your details.",
       });
-    }
-  });
+    });
 };

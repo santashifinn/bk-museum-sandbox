@@ -4,6 +4,7 @@ const {
   getUsers,
   getUserByUsername,
   createUser,
+  confirmUser,
 } = require("../controllers/users.controller");
 
 const {
