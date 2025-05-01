@@ -18,7 +18,7 @@ usersRouter.get("/:username", getUserByUsername);
 
 usersRouter.post("/signup", createUser);
 
-usersRouter.post("/signin", createUser);
+usersRouter.post("/signin", confirmUser);
 
 usersRouter.get("/:username/faves", getFavesByUser);
 
