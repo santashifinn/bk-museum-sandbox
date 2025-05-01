@@ -52,7 +52,7 @@ exports.confirmUser = (req, res, next) => {
 
   selectUserByUsername(req.body.username)
     .then((user) => {
-      if (user) {
+      // if (user) {
         bcrypt.compare(req.body.password, user.hash_password, (err, result) => {
           // if (err) {
           //   res.status(500).send({ message: "Error comparing passwords" });
@@ -62,17 +62,18 @@ exports.confirmUser = (req, res, next) => {
             res
               .status(200)
               .send({ message: "Login successful.", user: { _id, username } });
-          } else {
-            res.status(401).send({ message: "Passwords don't match." });
-          }
+          } 
+          // else {
+          //   res.status(401).send({ message: "Passwords don't match." });
+          // }
         });
-      } else {
-        res.status(400).send({ message: "User not found. Please sign up." });
-      }
+      // } else {
+      //   res.status(400).send({ message: "User not found. Please sign up." });
+      // }
     })
-    .catch((error) => {
-      res.status(400).send({
-        message: "There was an error while authenticating your details.",
-      });
-    });
+    // .catch((error) => {
+    //   res.status(400).send({
+    //     message: "There was an error while authenticating your details.",
+    //   });
+    // });
 };
