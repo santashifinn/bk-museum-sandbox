@@ -27,6 +27,7 @@ exports.addUser = (username, email, password_hashed) => {
       [username, email, password_hashed]
     )
     .then(({ rows: [user] }) => {
+      // console.log(user)
       return user;
     });
 };

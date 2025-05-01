@@ -25,18 +25,21 @@ exports.getUserByUsername = (req, res, next) => {
 
 exports.createUser = (req, res, next) => {
   const { username, email, password } = req.body;
-
+// console.log(username, email, password);
   if (!username || !email || !password) {
     return res
       .status(400)
       .send({ message: "Please enter username, email and password." });
   }
   bcrypt.hash(password, 10).then((password_hashed) => {
+    // console.log(password_hashed);
     addUser(username, email, password_hashed)
-      .then((username) => {
+      .then((user) => {
+        // console.log(user);
         res
           .status(201)
-          .send({ message: `Welcome ${username}! You are all signed up.` });
+          // .send({ message: `Welcome ${user.username}! You are all signed up.` });
+          .send({user})
       })
       .catch(next);
   });
