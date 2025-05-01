@@ -1,3 +1,6 @@
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+
 const {
   selectUsers,
   selectUserByUsername,
@@ -22,13 +25,21 @@ exports.getUserByUsername = (req, res, next) => {
 };
 
 exports.createUser = (req, res, next) => {
-  const username = req.body.username;
-  const email = req.body.email;
-  const password_hashed = req.body.password_hashed;
+  const { username, email, password } = req.body;
 
-  addUser(username, email, password_hashed)
-    .then((user) => {
-      res.status(201).send({ user });
-    })
-    .catch(next);
+  if (!username || !email || !password) {
+    return res
+      .status(400)
+      .send({ message: "Please enter username, email and password." });
+  }
+
+  bcrypt.hash(password, 10).then((password_hashed) => {
+    addUser(username, email, password_hashed)
+      .then((username) => {
+        res
+          .status(201)
+          .send({ message: `Welcome ${username}! You are all signed up.` });
+      })
+      .catch(next);
+  });
 };
