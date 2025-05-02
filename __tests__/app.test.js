@@ -70,43 +70,40 @@ describe("POST /api/users/signup", () => {
       .send(newUser)
       .expect(400)
       .then(({ body }) => {
-        console.log(body);
-        expect(body.message).toBe("Please enter username, email and password.");
+        expect(body.msg).toBe("Please enter username, email and password.");
       });
   });
 });
 
-// describe("POST /api/users/signin", () => {
-//   test("201: Adds a new user", () => {
-//     const newUser = {
-//       username: "al",
-//       email: "al@al.com",
-//       password_hashed: "cjwikfiawebafkwbjfwks",
-//     };
-//     return request(app)
-//       .post("/api/users/signin")
-//       .send(newUser)
-//       .expect(201)
-//       .then(({ body: { user } }) => {
-//         expect(user.username).toBe("al");
-//         expect(user.email).toBe("al@al.com");
-//         expect(user.password_hashed).toBe("cjwikfiawebafkwbjfwks");
-//       });
-//   });
-//   test("400: Responds with an error message when given incomplete required data, ex. missing email", () => {
-//     const newUser = {
-//       username: "al",
-//       password_hashed: "cjwikfiawebafkwbjfwks",
-//     };
-//     return request(app)
-//       .post("/api/users/signin")
-//       .send(newUser)
-//       .expect(400)
-//       .then((response) => {
-//         expect(response.body.msg).toBe("Bad request");
-//       });
-//   });
-// });
+describe("POST /api/users/signin", () => {
+  test("201: Signs in a user", () => {
+    const user = {
+      username: "amber",
+      email: "amber@chan.com",
+      password: "ilovesnuggles",
+    };
+    return request(app)
+      .post("/api/users/signin")
+      .send(user)
+      .expect(201)
+      .then(({ body}) => {
+        expect(body.user.username).toBe("amber");
+        expect(body.msg).toBe("Login successful.");
+      });
+  });
+  test("400: Responds with an error message when given incomplete required data, ex. missing password", () => {
+    const newUser = {
+      username: "al",
+    };
+    return request(app)
+      .post("/api/users/signin")
+      .send(newUser)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Please enter your username and password.");
+      });
+  });
+});
 
 describe("GET /api/users/:username/faves", () => {
   test("200: Responds with an array of favourite works for the given username", () => {

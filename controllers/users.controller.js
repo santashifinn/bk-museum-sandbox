@@ -25,11 +25,11 @@ exports.getUserByUsername = (req, res, next) => {
 
 exports.createUser = (req, res, next) => {
   const { username, email, password } = req.body;
-// console.log(username, email, password);
+  // console.log(username, email, password);
   if (!username || !email || !password) {
     return res
       .status(400)
-      .send({ message: "Please enter username, email and password." });
+      .send({ msg: "Please enter username, email and password." });
   }
   bcrypt.hash(password, 10).then((password_hashed) => {
     // console.log(password_hashed);
@@ -39,10 +39,30 @@ exports.createUser = (req, res, next) => {
         res
           .status(201)
           // .send({ message: `Welcome ${user.username}! You are all signed up.` });
-          .send({user})
+          .send({ user });
       })
       .catch(next);
   });
+};
+
+exports.confirmUser = (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res
+      .status(400)
+      .send({ msg: "Please enter your username and password." });
+  }
+  selectUserByUsername(username)
+    .then((user) => {
+      if (user) {
+        bcrypt.compare(password, user.password_hashed).then(() => {
+          return res
+            .status(201)
+            .send({ msg: "Login successful.", user: { username } });
+        });
+      }
+    })
+    .catch(next);
 };
 
 // exports.confirmUser = (req, res, next) => {
@@ -67,37 +87,3 @@ exports.createUser = (req, res, next) => {
 //     }
 //   });
 // };
-
-exports.confirmUser = (req, res, next) => {
-  if (!req.body.username || !req.body.password) {
-    res
-      .status(400)
-      .send({ message: "Please enter your username and password." });
-  }
-
-  selectUserByUsername(req.body.username)
-    .then((user) => {
-      if (user) {
-        bcrypt.compare(req.body.password, user.hash_password, (err, result) => {
-          if (err) {
-            res.status(500).send({ message: "Error comparing passwords" });
-            return;
-          }
-          if (result) {
-            res
-              .status(200)
-              .send({ message: "Login successful.", user: { _id, username } });
-          } else {
-            res.status(401).send({ message: "Passwords don't match." });
-          }
-        });
-      } else {
-        res.status(400).send({ message: "User not found. Please sign up." });
-      }
-    })
-    .catch((error) => {
-      res.status(400).send({
-        message: "There was an error while authenticating your details.",
-      });
-    });
-};
