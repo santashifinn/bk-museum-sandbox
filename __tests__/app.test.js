@@ -108,7 +108,7 @@ describe("POST /api/users/signin", () => {
 describe("GET /api/users/:username/faves", () => {
   test("200: Responds with an array of favourite works for the given username", () => {
     return request(app)
-      .get("/api/users/bob/faves")
+      .get("/api/users/amber/faves")
       .expect(200)
 
       .then(({ body: { faves } }) => {

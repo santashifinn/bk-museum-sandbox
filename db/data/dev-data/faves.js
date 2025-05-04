@@ -8,7 +8,11 @@ module.exports = [
     work_id: "NG-NM-7687",
   },
   {
-    username: "bob",
-    work_id: "1998.78.14",
+    username: "amber",
+    work_id: "SK-C-211",
+  },
+  {
+    username: "amber",
+    work_id: "NG-NM-7687",
   },
 ];
