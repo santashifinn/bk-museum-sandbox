@@ -1,8 +1,5 @@
 const format = require("pg-format");
 const db = require("../connection");
-const {
-  createRef,
-} = require("./utils");
 
 const seed = ({ userData, favesData }) => {
   return db

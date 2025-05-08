@@ -19,4 +19,9 @@ module.exports = [
     work_id: "NG-NM-7687",
     collection: "Favourites",
   },
+  {
+    username: "amber",
+    work_id: "SK-A-4",
+    collection: "Ambery",
+  },
 ];
