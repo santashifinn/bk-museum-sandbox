@@ -16,6 +16,7 @@ describe("GET /api", () => {
     return request(app)
       .get("/api")
       .expect(200)
+      
       .then(({ body: { endpoints } }) => {
         expect(endpoints).toEqual(endpointsJson);
       });
@@ -27,6 +28,7 @@ describe("GET /api/users/:username", () => {
     return request(app)
       .get("/api/users/bob")
       .expect(200)
+
       .then(({ body: { user } }) => {
         expect(user.username).toBe("bob");
         expect(user.email).toBe("bob@bob.com");
@@ -37,6 +39,7 @@ describe("GET /api/users/:username", () => {
     return request(app)
       .get("/api/users/billandbentheflowerpotmen")
       .expect(404)
+
       .then(({ body }) => {
         expect(body.msg).toBe("Not found");
       });
@@ -54,6 +57,7 @@ describe("POST /api/users/signup", () => {
       .post("/api/users/signup")
       .send(newUser)
       .expect(201)
+
       .then(({ body: { user } }) => {
         expect(user.username).toBe("al");
         expect(user.email).toBe("al@al.com");
@@ -69,6 +73,7 @@ describe("POST /api/users/signup", () => {
       .post("/api/users/signup")
       .send(newUser)
       .expect(400)
+
       .then(({ body }) => {
         expect(body.msg).toBe("Please enter username, email and password.");
       });
@@ -86,6 +91,7 @@ describe("POST /api/users/signin", () => {
       .post("/api/users/signin")
       .send(user)
       .expect(201)
+
       .then(({ body}) => {
         expect(body.user.username).toBe("amber");
         expect(body.msg).toBe("Login successful.");
@@ -99,6 +105,7 @@ describe("POST /api/users/signin", () => {
       .post("/api/users/signin")
       .send(newUser)
       .expect(400)
+
       .then(({ body }) => {
         expect(body.msg).toBe("Please enter your username and password.");
       });
@@ -112,17 +119,39 @@ describe("GET /api/users/:username/faves", () => {
       .expect(200)
 
       .then(({ body: { faves } }) => {
-        // console.log(faves);
-        expect(faves.length).toBe(2);
-        // comments.forEach((comment) => {
-        //   expect(typeof comment.comment_id).toBe("number");
-        //   expect(typeof comment.votes).toBe("number");
-        //   expect(typeof comment.created_at).toBe("string");
-        //   expect(typeof comment.author).toBe("string");
-        //   expect(typeof comment.body).toBe("string");
-        //   expect(comment.article_id).toBe(3);
-        // });
+        expect(faves.length).toBe(3);
+        faves.forEach((fave) => {
+          expect(typeof fave.fave_id).toBe("number");
+          expect(typeof fave.username).toBe("string");
+          expect(typeof fave.work_id).toBe("string");
+          expect(typeof fave.collection).toBe("string");
+          expect(typeof fave.created_at).toBe("string");
+        });
       });
+  });
+});
+
+describe("POST /api/users/:username/:collection/:work_id", () => {
+  test("201: Responds with the new favourite work for the given username", () => {
+    return request(app)
+      .post("/api/users/amber/Favourites/1942.776")
+      .expect(201)
+
+      .then(({ body: { fave } }) => {
+        expect(typeof fave.fave_id).toBe("number");
+        expect(typeof fave.username).toBe("string");
+        expect(typeof fave.work_id).toBe("string");
+        expect(typeof fave.collection).toBe("string");
+        expect(typeof fave.created_at).toBe("string");
+      });
+  });
+});
+
+describe("DELETE /api/users/:username/:collection/:work_id", () => {
+  test("204: Deletes the given favourite work in the given collection for the given username", () => {
+    return request(app)
+      .delete("/api/users/amber/Favourites/NG-NM-7687")
+      .expect(204);
   });
 });
 

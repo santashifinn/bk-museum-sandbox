@@ -23,9 +23,9 @@ usersRouter.post("/signin", confirmUser);
 
 usersRouter.get("/:username/faves", getFavesByUser);
 
-usersRouter.post("/:username/:work_id", postFave);
+usersRouter.post("/:username/:collection/:work_id", postFave);
 
-usersRouter.delete("/:username/:work_id", deleteFave);
+usersRouter.delete("/:username/:collection/:work_id", deleteFave);
 
 
 module.exports = usersRouter;
