@@ -13,6 +13,7 @@ exports.getFavesByUser = (req, res, next) => {
   // Promise.all(promises)
   selectFavesByUser(username)
     .then((faves) => {
+      // console.log(faves);
       return res.status(200).send({ faves });
     })
     .catch(next);

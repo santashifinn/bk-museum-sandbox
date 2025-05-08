@@ -8,15 +8,16 @@ exports.selectFavesByUser = (username) => {
       [username]
     )
     .then(({ rows }) => {
+      console.log(rows);
       return rows;
     });
 };
 
-exports.addFave = (username, work_id) => {
+exports.addFave = (username, work_id, collection) => {
   return db
     .query(
-      `INSERT INTO faves (username, work_id) VALUES ($1, $2) RETURNING *;`,
-      [username, work_id]
+      `INSERT INTO faves (username, work_id, collection) VALUES ($1, $2, $3) RETURNING *;`,
+      [username, work_id, collection]
     )
     .then(({ rows }) => {
       return rows[0];

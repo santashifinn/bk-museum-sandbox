@@ -24,7 +24,8 @@ const seed = ({ userData, favesData }) => {
     CREATE TABLE faves (
     fave_id SERIAL PRIMARY KEY,
       username VARCHAR REFERENCES users(username) NOT NULL,
-      work_id VARCHAR,
+      work_id VARCHAR NOT NULL,
+      collection VARCHAR NOT NULL,
       created_at TIMESTAMP DEFAULT NOW()
     );`);
   })
@@ -41,10 +42,11 @@ const seed = ({ userData, favesData }) => {
   })
   .then(() => {
     const insertFavesQueryStr = format(
-      "INSERT INTO faves (username, work_id) VALUES %L;",
-      favesData.map(({ username, work_id }) => [
+      "INSERT INTO faves (username, work_id, collection) VALUES %L;",
+      favesData.map(({ username, work_id, collection }) => [
         username,
         work_id,
+        collection,
       ])
     );
     return db.query(insertFavesQueryStr);
