@@ -27,5 +27,7 @@ usersRouter.post("/:username/:collection/:work_id", postFave);
 
 usersRouter.delete("/:username/:collection/:work_id", deleteFave);
 
+usersRouter.delete("/:username/:collection", deleteCollection);
+
 
 module.exports = usersRouter;

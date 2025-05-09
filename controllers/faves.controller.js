@@ -56,3 +56,19 @@ exports.deleteFave = (req, res, next) => {
     })
     .catch(next);
 };
+
+exports.deleteCollection = (req, res, next) => {
+  const username = req.params.username;
+  const collection = req.params.collection;
+
+  const promises = [];
+  if (collection) {
+    promises.push(checkCollectionExists(username, collection));
+    promises.push(removeFave(username, collection));
+  }
+  Promise.all(promises)
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch(next);
+};
