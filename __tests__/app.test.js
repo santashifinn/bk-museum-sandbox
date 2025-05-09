@@ -16,7 +16,7 @@ describe("GET /api", () => {
     return request(app)
       .get("/api")
       .expect(200)
-      
+
       .then(({ body: { endpoints } }) => {
         expect(endpoints).toEqual(endpointsJson);
       });
@@ -151,6 +151,14 @@ describe("DELETE /api/users/:username/:collection/:work_id", () => {
   test("204: Deletes the given favourite work in the given collection for the given username", () => {
     return request(app)
       .delete("/api/users/amber/Favourites/NG-NM-7687")
+      .expect(204);
+  });
+});
+
+describe("DELETE /api/users/:username/:collection", () => {
+  test("204: Deletes the given collection for the given username", () => {
+    return request(app)
+      .delete("/api/users/amber/Ambery")
       .expect(204);
   });
 });
