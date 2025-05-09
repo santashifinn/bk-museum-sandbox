@@ -11,6 +11,7 @@ const {
   getFavesByUser,
   postFave,
   deleteFave,
+  deleteCollection
 } = require("../controllers/faves.controller");
 
 usersRouter.get("/", getUsers);
